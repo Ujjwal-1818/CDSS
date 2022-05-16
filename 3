@@ -1,0 +1,52 @@
+3a. Program to count number of:
+i.+ve and -ve integers
+ii. +ve and -ve fractions 
+%{
+#include<stdio.h>
+int pi=0,ni=0,pf=0,nf=0;
+%}
+%%
+[-][0-9]+ {ni++;}
+[+]?[0-9]+ {pi++;}
+[-][0-9]*\.[0-9]+ {nf++;}
+[+]?[0-9]*\.[0-9]+ {pf++;}
+%%
+void main(int argc,char *argv[])
+{
+if(argc!=2)
+{
+printf("usage :./a.out in.txt \n");
+exit(0);
+}
+yyin=fopen(argv[1],"r");
+yylex();
+printf("Number of positive integer %d\n",pi);
+printf("Number of negative integer %d\n",ni);
+printf("Number of positive fraction %d\n",pf);
+printf("Number of negative fraction %d\n",nf);
+}
+int yywrap(){
+return 1;
+}
+
+
+
+3b. Program to count the number of “scanf” and “printf” statements in a C program. 
+Replace them with “readf” and “writef” statements respectively.
+Code:
+%{
+#include<stdio.h>
+int sf=0,pf=0;
+%}
+%%
+"scanf" {sf++; fprintf(yyout,"readf");}
+"printf" {pf++; fprintf(yyout,"writef");}
+%%
+int main()
+{
+yyin=fopen("f1.c","r");
+yyout=fopen("f2.c","w");
+yylex();
+printf("no of scanf =%d\n no of printf =%d\n",sf,pf);
+return 0;
+}
